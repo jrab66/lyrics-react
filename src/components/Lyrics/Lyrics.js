@@ -11,13 +11,13 @@ export default class App extends Component {
     }
   }
 
-  componentDidMount() {
-    axios.get(`https://api.lyrics.ovh/v1/metallica/master_of_puppets`)
-      .then(res => {
-        const posts = res.data.results.map(obj => ({lyrics: obj.lyrics}));
-        this.setState({ posts });
-      });
-  }
+  // componentDidMount() {
+  //   axios.get(`https://api.lyrics.ovh/v1/metallica/master_of_puppets`)
+  //     .then(res => {
+  //       const posts = res.data.results.map(obj => ({lyrics: obj.lyrics}));
+  //       this.setState({ posts });
+  //     });
+  // }
 
 //   render() {
 //     return (

@@ -9,12 +9,12 @@ const TaskManager = () => {
     // Iterar objeto, usabamos Object.keys(tasks) que me devolvia un arreglo.
     
     const getTasks = () => {
-        axios.get('https://api.lyrics.ovh/v1/metallica/master_of_puppets')
+        axios.get('https://lyrics-test-jrab66.firebaseio.com/task.json')
         .then(({data})=>{
             setTasks(data);
         })
     };
-    
+   
     // montar, renderizar, morir
     useEffect(() => {
        getTasks();
@@ -30,10 +30,11 @@ const TaskManager = () => {
                     .map((id) => <Task
                     gT={getTasks}
                     key={id}
-                    title={tasks[id].title} 
-                    priority={tasks[id].prioridad}
+                    artist={tasks[id].artist} 
+                    ranking={tasks[id].ranking}
                     done={tasks[id].isDone}
-                    time={tasks[id].time}
+                    lyrics={tasks[id].lyrics}
+                    songtittle={tasks[id].songtittle}
                     id={id}
                     />)
                 }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Task = ({ id, title, priority, done, time, gT }) => {
+const Task = ({ id, artist, ranking, done, lyrics, songtittle, gT }) => {
   const [ check, setCheck ] = useState(done);
-  const url = `https://primeracintaroja.firebaseio.com/task/${id}.json`;
+  const url = `https://lyrics-test-jrab66.firebaseio.com/task/${id}.json`;
 
   // definición, aquí no se ejecuta.
   const handleChange = () => {
@@ -25,7 +25,7 @@ const Task = ({ id, title, priority, done, time, gT }) => {
 
   return (
     <div className="card">
-        <h4><span className="badge badge-primary">{priority}</span> {title}.</h4>
+        <h4><span className="badge badge-primary">{ranking}</span> {artist} ///// {songtittle}.</h4>
         <div className="form-check">
           <input
           className="form-check-input" 
@@ -35,13 +35,14 @@ const Task = ({ id, title, priority, done, time, gT }) => {
           onChange={handleChange}
           id={id}/>
           <label className="form-check-label" htmlFor={id}>
-            Realizado es {time} horas.
+            Realizado es {lyrics} horas.
           </label>
           <button type="button" onClick={() => {
             alert('Se eliminó la tarea', id);
             eliminar();
           }} className="btn btn-danger">Eliminar</button>
         </div>
+        {lyrics}
     </div>
   );
 };
