@@ -1,25 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from "react-router-dom";
+
+import IndexMenu from './containers/Index/Index';
+import MainContainerv2 from './containers/MainContainerv2/MainContainerv2';
+import TaskContainer from './containers/TaskContainer/TaskContainer';
+import Container404 from './containers/Container404/Container404'
+import Lyrics from './containers/LyricsFind/LyricsFind'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+          <Route exact path="/">
+            <IndexMenu/>
+          </Route>
+          <Route exact path="/test">
+            <Lyrics/>
+          </Route>
+          <Route exact path="/tareas">
+            <MainContainerv2/>
+          </Route>
+          <Route path="/create">
+            <TaskContainer/>
+          </Route>
+          <Route path="*">
+            <Container404 />
+          </Route>
+      </Switch>
+  </Router>
   );
 }
 
