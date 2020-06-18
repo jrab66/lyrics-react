@@ -14,7 +14,7 @@ const NewTask = () => {
     const [artist, setArtist] = useState('');
     const [ranking, setRanking] = useState(null);
     const [isDone] = useState(false);
-    const [lyrics, setLyrics] = useState(null);
+    var lyrics= '';
     const [songtittle, setTittle] = useState(null);
     
 
@@ -30,39 +30,57 @@ const NewTask = () => {
             // && ranking >= 0
             && songtittle.length > 0
             && artist.length > 0) {
-            const body = {
+            var body = {
                 artist,
                 ranking,
                 isDone,
-                // lyrics,
+                lyrics,
                 songtittle,
                 
-            }
-            axios.get('https://api.lyrics.ovh/v1/metallica/orion')
+            };
+            // axios.get('https://api.lyrics.ovh/v1/metallica/orion')
+            // .then(function (response) {
+            //     // handle success
+            //     console.log(response);
+            //     }).catch((err) => {
+            //         console.log("error");
+            //     })
+            //     }
+            // };
+            // axios.get('https://api.lyrics.ovh/v1/metallica/orion')
+            // .then(response => {
+            //     this.response = response.data;
+            //     console.log(this.response[0].name);
+            // });
+            axios.get('https://api.lyrics.ovh/v1/metallica/master_of_puppets')
             .then(function (response) {
                 // handle success
-                console.log(response);
-                if (response.data == "Instrumental"){
-                    alert(response);
-                    console.log(response);
-                }
-            });
-            axios.get('https://api.lyrics.ovh/v1/metallica/orion')
-            .then(response => {
-                this.response = response.data;
-                console.log(this.response[0].name);
-            });
+                // console.log(response.data.lyrics);
+                // alert(response.data.lyrics);
+                var lyrics1 = response.data.lyrics;
+                body.lyrics = lyrics1;
+                axios.post('https://lyrics-test-jrab66.firebaseio.com//task.json', body)
+                .then(({ data }) => {
+                    alert('Tarea Creada');
+                    history.push("/");
+                })
+                .catch(()=> {
+                    setLoading(false);
+                    setError('Error')
+                });
+                // console.log(lyrics);
+                // alert(lyrics1);
+                alert(body.lyrics)
+                // alert(body.artist);
+                // body.lyrics = response.data.lyrics;
+                }).catch((err) => {
+                    alert('artista o cancion no existe o esta mal escrita');
+                    console.log("error");
+                });
+                
 
 
-            axios.post('https://lyrics-test-jrab66.firebaseio.com//task.json', body)
-            .then(({ data }) => {
-                alert('Tarea Creada');
-                history.push("/");
-            })
-            .catch(()=> {
-                setLoading(false);
-                setError('Error')
-            });
+
         } else {
             setLoading(false);
                 setError('Error')
@@ -77,7 +95,7 @@ const NewTask = () => {
         setRanking(0);
     };
     // const handleLyrics = (event) => {
-    //     setLyrics(event.target.value);
+    //     setLyrics(response.data.lyrics);
     // };
     const handleTittle = (event) => {
         setTittle(event.target.value);
@@ -87,14 +105,21 @@ const NewTask = () => {
 
 
     const FindLyrics = () => {
-        axios.get('https://api.lyrics.ovh/v1/metallica/orion')
-            .then(function (response) {
-                // handle success
-                console.log(response);
-                if (response.data == "Instrumental"){
-                    alert(response);
-                    console.log(response);
-                }
+        axios.get('https://api.lyrics.ovh/v1/metallica/master_of_puppets')
+        .then(function (response) {
+            // handle success
+            // console.log(response.data.lyrics);
+            // alert(response.data.lyrics);
+            var lyrics1 = response.data.lyrics;
+            // body.lyrics = lyrics1;
+            // console.log(lyrics);
+            // alert(lyrics1);
+            // alert(body.lyrics)
+            // alert(body.artist);
+            // body.lyrics = response.data.lyrics;
+            }).catch((err) => {
+                alert('artista o cancion no existe o esta mal escrita');
+                console.log("error");
             });
         // getNameById()
         //   .then(data => {
@@ -165,7 +190,7 @@ const NewTask = () => {
         </div>
         <div class="form-group">
             <label for="tiempo">titulo cancion:</label>
-            <input type="text" value={lyrics} class="form-control" onChange={handleTittle} id="title"/>
+            <input type="text" value={songtittle} class="form-control" onChange={handleTittle} id="songtittle"/>
         </div>
         <button type="button" onClick={()=>{createTask()}} class="btn btn-primary">Crear</button>
         <button type="button" onClick={()=>{FindLyrics()}} class="btn btn-primary">test</button>

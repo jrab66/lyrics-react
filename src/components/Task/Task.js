@@ -34,15 +34,16 @@ const Task = ({ id, artist, ranking, done, lyrics, songtittle, gT }) => {
           checked={check}
           onChange={handleChange}
           id={id}/>
-          <label className="form-check-label" htmlFor={id}>
+          {/* <label className="form-check-label" htmlFor={id}>
             Realizado es {lyrics} horas.
-          </label>
+          </label> */}
           <button type="button" onClick={() => {
             alert('Se eliminó la tarea', id);
             eliminar();
           }} className="btn btn-danger">Eliminar</button>
         </div>
-        {lyrics}
+        <span>{lyrics}</span>
+        
     </div>
   );
 };
